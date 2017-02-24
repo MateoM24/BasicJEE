@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.time.LocalDateTime" %><%--
   Created by IntelliJ IDEA.
   User: Mateusz
   Date: 2017-02-23
@@ -14,7 +14,19 @@
 <body>
 My login page in jsp
 <br>
-My name is: ${name}
+Do method param1 is: ${param1}
+<%
+    //testing scriplet
+    System.out.println("scriplet works");
+    LocalDateTime data =LocalDateTime.now();
+%>
+<br>
+Local time from scriplet expression is: <%=data%>
+<br>
+<p><font color="red">${errorMessage}</font></p>
+<form action="/login" method="post">
+    Enter your name <input type="text" name="name"> and password <input type="password" name="password"><input type="submit" value="Zaloguj!">
+</form>
 
 </body>
 </html>

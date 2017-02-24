@@ -17,12 +17,12 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String name = request.getParameter("name");
-        request.setAttribute("name",name);
-        System.out.println(name);
-        System.out.println(request.getAttribute("name"));
+        String param1 = request.getParameter("param1");
+        request.setAttribute("param1",param1);
+        System.out.println(param1);
+        System.out.println(request.getAttribute("param1"));
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
-
+        // how regular servlet would looks like:
         /*PrintWriter out = response.getWriter();
         out.println("<html>");
         out.println("<head>");
@@ -34,4 +34,18 @@ public class LoginServlet extends HttpServlet {
         out.println("</html>");*/
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name=req.getParameter("name");
+        String password=req.getParameter("password");
+        boolean isValid=UserValidation.isValid(name,password);
+        if(isValid) {
+            req.setAttribute("name", name);
+            req.setAttribute("password", password);
+            req.getRequestDispatcher("welcome.jsp").forward(req, resp);
+        }else{
+            req.setAttribute("errorMessage","invalid credentials! :(");
+            req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+        }
+    }
 }
